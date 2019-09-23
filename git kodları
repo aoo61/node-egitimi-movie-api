@@ -1,0 +1,5 @@
+git clone "clone lanacak repostory in adresi" . : repostory projemize eklemek.
+git status : son değişikliklerin nerede yapıldığını görmek.
+git add : son değişiklikleri kayıt ediyor.
+git commit -m "değişikliğin açıklaması" : commit yapmak.
+git push origin master : push lama işlemi yani yapılan bütün değişiklikleri github a kaydetme.
