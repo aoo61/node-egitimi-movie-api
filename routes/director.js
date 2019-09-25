@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 
@@ -21,12 +22,12 @@ router.get('/', (req, res) => {
                 from: 'movies',
                 foreignField: 'director_id',
                 localField: '_id',
-                as: 'movie'
+                as: 'movies'
             }
         },
         {
             $unwind: {          // yukarıda ki oluşturduğumuz movie verisinin diğer alanlarda da kullanılmasını sağlamak için yazıyoruz.
-                path: '$movie',
+                path: '$movies',
                 preserveNullAndEmptyArrays: true        // join işleminde join yapılmayan verilerinde görüntülenmesi için
             }
         },
@@ -36,10 +37,10 @@ router.get('/', (req, res) => {
                     _id: '$_id',            // burası grouplandırma yapıyor. yani aynı verilerin tek bir grup altında olmasını sağlıyor.
                     name: '$name',
                     surname: '$surname',
-                    bio: '$bio'
+                    bio: '$bio',
                 },
                 movies: {
-                    $push: '$movie'
+                    $push: '$movies'
                 }
             }
         },
@@ -58,6 +59,56 @@ router.get('/', (req, res) => {
     }).catch(err => {
         res.json(err);
     });
+});
+
+router.get('/:director_id', (req, res) => {
+    Director.aggregate([
+        {
+            $match: {
+                '_id': mongoose.Types.ObjectId(req.body.director_id)
+            }
+        },
+        {
+            $lookup: {
+                from: 'movies',
+                foreignField: 'director_id',
+                localField: '_id',
+                as: 'movies'
+            }
+        },
+        {
+            $unwind: {
+                path: '$movies',
+                preserveNullAndEmptyArrays: true
+            }
+        },
+        {
+            $group: {
+                _id: {
+                    _id: '$_id',
+                    name: '$name',
+                    surname: '$surname',
+                    bio: '$bio'
+                },
+                movies: {
+                    $push: '$movies'
+                }
+            }
+        },
+        {
+            project: {
+                _id: '$_id._id',
+                name: '$_id.name',
+                surname: '$_id.surname',
+                bio: '$_id.bio',
+                movies: '$movies'
+            }
+        }
+    ]).then(data => {
+        res.json(data);
+    }).catch(err => {
+        res.json(err);
+    })
 });
 
 module.exports = router;
