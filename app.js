@@ -13,7 +13,10 @@ const app = express();
 //db connection
 const db = require('./helper/db')();
 
-// view engine setup
+// config js dosyasını sayfamıza dahil ediyoruz.
+const config = require('./config');
+app.set('api_secret_key', config.api_secret_key);   // api_secret_key i global olarak kullanmak için app e set ediyoruz.
+// view engine setup                                // kullanmak istediğimiz sayfada get ile çağırıp kullanabiliriz.
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
