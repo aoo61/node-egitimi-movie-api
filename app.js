@@ -7,6 +7,8 @@ const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const movieRouter = require('./routes/movie');
 const directorRouter = require('./routes/director');
+//Middleware
+const verifyTokenRouter = require('./middleware/verify-token');
 
 const app = express();
 
@@ -27,6 +29,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/', verifyTokenRouter);
 app.use('/movies', movieRouter);
 app.use('/directors', directorRouter);
 // catch 404 and forward to error handler
