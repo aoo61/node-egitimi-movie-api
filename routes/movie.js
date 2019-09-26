@@ -31,11 +31,23 @@ router.post('/', (req, res, next) => {
 });
 
 router.get('/', (req, res) => {
-  Movie.find({ })
-      .then((data) => {
-        res.json(data);
-      }).catch(err => {
-        res.json(err);
+  Movie.aggregate([
+      {
+          $lookup: {
+              from: 'directors',
+              foreignField: '_id',
+              localField: 'director_id',
+              as: 'director'
+          }
+      },
+      {
+          $unwind: '$director'
+      }
+  ])
+  .then((data) => {
+      res.json(data);
+  }).catch(err => {
+      res.json(err);
   });
 });
 
