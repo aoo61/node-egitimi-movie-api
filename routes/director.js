@@ -65,9 +65,9 @@ router.get('/:director_id', (req, res) => {
     Director.aggregate([
         {
             $match: {
-                '_id': mongoose.Types.ObjectId(req.body.director_id)
-            }
-        },
+                '_id': mongoose.Types.ObjectId(req.params.director_id)          // match  ile require la birlilte url den gelen id değerini params
+            }                                                                   // fonksiyonu ile alıyoruz ve _id değişkenine atıp o id ye
+        },                                                                      // ait kayıdı getiriyoruz.
         {
             $lookup: {
                 from: 'movies',
@@ -96,7 +96,7 @@ router.get('/:director_id', (req, res) => {
             }
         },
         {
-            project: {
+            $project: {
                 _id: '$_id._id',
                 name: '$_id.name',
                 surname: '$_id.surname',
@@ -104,11 +104,36 @@ router.get('/:director_id', (req, res) => {
                 movies: '$movies'
             }
         }
-    ]).then(data => {
+    ])
+    .then(data => {
         res.json(data);
     }).catch(err => {
         res.json(err);
     })
+});
+
+router.put('/:director_id', (req, res, next) => {
+    Director.findByIdAndUpdate(req.params.director_id, req.body, {new: true})
+    .then(director => {
+        if (!director)
+            next({ message: 'Bu id ye ait bir yönetmen yok', code: 80});
+        else
+            res.json(director);
+    }).catch(err => {
+        res.json(err);
+    });
+});
+
+router.delete('/:director_id', (req, res, next) => {
+    Director.findByIdAndRemove(req.params.director_id)
+    .then(director => {
+        if (!director)
+            next({ message: "Bu id ye ait yönetmen yok", code: 81});
+        else
+            res.json({status : 1});
+    }).catch(err => {
+        res.json(err);
+    });
 });
 
 module.exports = router;
