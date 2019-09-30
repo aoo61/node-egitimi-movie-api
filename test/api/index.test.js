@@ -11,10 +11,10 @@ chai.use(chaiHttp);
 describe('Node Server', () => {                         // describe ların içinde birden çok it olabilir. ilk parametre açıklama ikincisi callback fonksiyon oluyor.
     it('(GET /) Anasayfayı döndürür.', (done) => {      // it ler içinde istediğimiz unit testleri yapabliriz.
         chai.request(server)
-            .get('/')
-            .end((err, res) => {
-                res.should.have.status(200);      // status 200 olmalıdır diyoruz eğer öyleyse done() nu geri döndürüyoruz.
-                done();
-            });
+        .get('/')
+        .end((err, res) => {
+            res.should.have.status(200);      // status 200 olmalıdır diyoruz eğer öyleyse done() nu geri döndürüyoruz.
+            done();
+        })
     });
 });

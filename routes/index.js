@@ -25,7 +25,7 @@ router.post('/register', (req, res) => {
   });
 });
 
-router.get('/authenticate', (req, res) => {
+router.post('/authenticate', (req, res) => {
   const {username, password} = req.body;
 
   User.findOne({
