@@ -21,7 +21,7 @@ describe('/director test', () => {
    describe('GET /directors', () => {
        it('it should GET all the director', done => {
            chai.request(server)
-               .get('/directors')
+               .get('/api/directors')
                .set('x-access-token', token)
                .end((err, res) => {
                    res.should.have.status(200);
@@ -41,7 +41,7 @@ describe('/director test', () => {
             };
 
            chai.request(server)
-               .post('/directors')
+               .post('/api/directors')
                .send(director)
                .set('x-access-token', token)
                .end((err, res) => {
@@ -59,7 +59,7 @@ describe('/director test', () => {
    describe('GET /:director_id', () => {
        it('it should GET a director by the given id', done => {
            chai.request(server)
-               .get('/directors/' + directorId)
+               .get('/api/directors/' + directorId)
                .set('x-access-token', token)
                .end((err, res) => {
                    res.should.have.status(200);
@@ -82,7 +82,7 @@ describe('/director test', () => {
                bio: 'Aktör'
            };
            chai.request(server)
-               .put('/directors/' + directorId)
+               .put('/api/directors/' + directorId)
                .set('x-access-token', token)
                .send(director)
                .end((err, res) => {
@@ -99,7 +99,7 @@ describe('/director test', () => {
    describe('DELETE /:director_id', () => {
        it('it should DELETE a director given by id', done => {
            chai.request(server)
-               .delete('/directors/' + directorId)
+               .delete('/api/directors/' + directorId)
                .set('x-access-token', token)
                .end((err, res) => {
                    res.should.have.status(200);
