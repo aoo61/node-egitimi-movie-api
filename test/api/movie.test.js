@@ -60,6 +60,7 @@ describe('/movies test', () => {
                 .get('/movies/' + movieId)
                 .set('x-access-token', token)
                 .end((err, res) => {
+                    res.should.have.status(200);
                     res.should.have.be.a('object');
                     res.body.should.have.property('title');
                     res.body.should.have.property('director_id');
