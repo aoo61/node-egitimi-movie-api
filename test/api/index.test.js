@@ -13,6 +13,8 @@ describe('Node Server', () => {                         // describe ların için
         chai.request(server)
         .get('/')
         .end((err, res) => {
+            if(err)
+                throw err;
             res.should.have.status(200);      // status 200 olmalıdır diyoruz eğer öyleyse done() nu geri döndürüyoruz.
             done();
         });

@@ -12,7 +12,9 @@ describe('/movies test', () => {
         chai.request(server)                                    // server dan istek yapıyoruz.
             .post('/authenticate')
             .send({username: 'ali6141', password: '123456789'})    // server a kullanıcı adımızı ve şifremizi gönderiyoruz.
-            .end((err, res) => {                                 // geri dönen callback fonksiyonundan token i alıyoruz test te kullanmak için
+            .end((err, res) => {                                // geri dönen callback fonksiyonundan token i alıyoruz test te kullanmak için
+                if(err)
+                    throw err;
                 token = res.body.token;
                 done();
             });
@@ -24,6 +26,8 @@ describe('/movies test', () => {
                 .get('/api/movies')                               // movies url ini getiriyoruz.
                 .set('x-access-token', token)                     // token i x-acces-token e set ediyoruz.
                 .end((err, res) => {
+                    if(err)
+                        throw err;
                     res.should.have.status(200);            // cevabın status u 200 olmalı
                     res.body.should.be.a('array');          // dönen data array olmalı sorgusu yapıyoruz.
                     movieId = res.body[0]._id;
@@ -47,6 +51,8 @@ describe('/movies test', () => {
                 .send(movie)
                 .set('x-access-token', token)
                 .end((err, res) => {
+                    if(err)
+                        throw err;
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     done();
@@ -60,6 +66,8 @@ describe('/movies test', () => {
                 .get('/api/movies/' + movieId)
                 .set('x-access-token', token)
                 .end((err, res) => {
+                    if(err)
+                        throw err;
                     res.should.have.status(200);
                     res.should.have.be.a('object');
                     res.body.should.have.property('title');
@@ -88,6 +96,8 @@ describe('/movies test', () => {
                 .send(movie)
                 .set('x-access-token', token)
                 .end((err, res) => {
+                    if(err)
+                        throw err;
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     res.body.should.have.property('title').eql(movie.title);
@@ -105,6 +115,8 @@ describe('/movies test', () => {
                 .delete('/api/movies/' + movieId)
                 .set('x-access-token', token)
                 .end((err, res) => {
+                    if(err)
+                        throw err;
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     res.body.should.have.property('status').eql(1);

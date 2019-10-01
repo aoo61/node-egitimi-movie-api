@@ -13,6 +13,8 @@ describe('/director test', () => {
            .post('/authenticate')
            .send({username: 'ali6141', password: '123456789'})
            .end((err, res) => {
+               if(err)
+                   throw err;
                token = res.body.token;
                done();
            });
@@ -24,6 +26,8 @@ describe('/director test', () => {
                .get('/api/directors')
                .set('x-access-token', token)
                .end((err, res) => {
+                   if(err)
+                       throw err;
                    res.should.have.status(200);
                    res.body.should.be.a('array');
                    directorId = res.body[0]._id;
@@ -45,6 +49,8 @@ describe('/director test', () => {
                .send(director)
                .set('x-access-token', token)
                .end((err, res) => {
+                   if(err)
+                       throw err;
                    res.should.have.status(200);
                    res.body.should.be.a('object');
                    res.body.should.have.property('_id');
@@ -62,6 +68,8 @@ describe('/director test', () => {
                .get('/api/directors/' + directorId)
                .set('x-access-token', token)
                .end((err, res) => {
+                   if(err)
+                       throw err;
                    res.should.have.status(200);
                    res.body.should.have.be.a('array');
                    done();
@@ -81,6 +89,8 @@ describe('/director test', () => {
                .set('x-access-token', token)
                .send(director)
                .end((err, res) => {
+                   if(err)
+                       throw err;
                    res.should.have.status(200);
                    res.body.should.be.a('object');
                    res.body.should.have.property('name').eql(director.name);
@@ -97,6 +107,8 @@ describe('/director test', () => {
                .delete('/api/directors/' + directorId)
                .set('x-access-token', token)
                .end((err, res) => {
+                   if(err)
+                       throw err;
                    res.should.have.status(200);
                    res.body.should.be.a('object');
                    res.body.should.have.property('status').eql(1);
