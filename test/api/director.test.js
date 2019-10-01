@@ -15,6 +15,8 @@ describe('/director test', () => {
            .end((err, res) => {
                token = res.body.token;
                done();
+           }).catch(err => {
+               throw err;
            });
    });
 
@@ -28,6 +30,8 @@ describe('/director test', () => {
                    res.body.should.be.a('array');
                    directorId = res.body[0]._id;
                    done();
+               }).catch(err => {
+                   throw err;
                });
        });
    });
@@ -52,6 +56,8 @@ describe('/director test', () => {
                    res.body.should.have.property('surname');
                    res.body.should.have.property('bio');
                    done();
+               }).catch(err => {
+                   throw err;
                });
        });
    });
@@ -65,6 +71,8 @@ describe('/director test', () => {
                    res.should.have.status(200);
                    res.body.should.have.be.a('array');
                    done();
+               }).catch(err => {
+                   throw err;
                });
        });
    });
@@ -87,6 +95,8 @@ describe('/director test', () => {
                    res.body.should.have.property('surname').eql(director.surname);
                    res.body.should.have.property('bio').eql(director.bio);
                    done();
+               }).catch(err => {
+                   throw err;
                });
        });
    });
@@ -101,6 +111,8 @@ describe('/director test', () => {
                    res.body.should.be.a('object');
                    res.body.should.have.property('status').eql(1);
                    done();
+               }).catch(err => {
+                   throw err;
                });
        });
    });
