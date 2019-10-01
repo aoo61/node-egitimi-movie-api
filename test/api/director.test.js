@@ -6,7 +6,7 @@ const server = require('../../app');
 chai.use(chaiHttp);
 
 let token, directorId;
-
+//adajkfahjbakjasdasşdlaskld
 describe('/director test', () => {
    before('Get token', (done) => {
        chai.request(server)
