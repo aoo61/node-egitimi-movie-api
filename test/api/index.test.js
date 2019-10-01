@@ -15,6 +15,6 @@ describe('Node Server', () => {                         // describe ların için
         .end((err, res) => {
             res.should.have.status(200);      // status 200 olmalıdır diyoruz eğer öyleyse done() nu geri döndürüyoruz.
             done();
-        })
+        });
     });
 });

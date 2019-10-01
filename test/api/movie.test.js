@@ -15,8 +15,6 @@ describe('/movies test', () => {
             .end((err, res) => {                                 // geri dönen callback fonksiyonundan token i alıyoruz test te kullanmak için
                 token = res.body.token;
                 done();
-            }).catch(err => {
-                throw err;
             });
     });
 
@@ -30,8 +28,6 @@ describe('/movies test', () => {
                     res.body.should.be.a('array');          // dönen data array olmalı sorgusu yapıyoruz.
                     movieId = res.body[0]._id;
                     done();
-                }).catch(err => {
-                    throw err;
                 });
         });
     });
@@ -54,8 +50,6 @@ describe('/movies test', () => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     done();
-                }).catch(err => {
-                    throw err;
                 });
         });
     });
@@ -76,8 +70,6 @@ describe('/movies test', () => {
                     res.body.should.have.property('imdb_score');
                     res.body.should.have.property('_id').eql(movieId);
                     done();
-                }).catch(err => {
-                    throw err;
                 });
         });
     });
@@ -103,10 +95,8 @@ describe('/movies test', () => {
                     res.body.should.have.property('year').eql(movie.year);
                     res.body.should.have.property('imdb_score').eql(movie.imdb_score);
                     done();
-                }).catch(err => {
-                throw err;
                 });
-        })
+        });
     });
 
     describe('DELETE /:movie_id', () => {
@@ -119,9 +109,7 @@ describe('/movies test', () => {
                     res.body.should.be.a('object');
                     res.body.should.have.property('status').eql(1);
                     done();
-                }).catch(err => {
-                    throw err;
                 });
-        })
+        });
     });
 });
