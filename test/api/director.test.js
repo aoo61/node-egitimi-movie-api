@@ -8,7 +8,7 @@ chai.use(chaiHttp);
 let token, directorId;
 
 describe('/director test', () => {
-   before(done => {
+   before('Get token', (done) => {
        chai.request(server)
            .post('/authenticate')
            .send({username: 'ali6141', password: '123456789'})
@@ -21,7 +21,7 @@ describe('/director test', () => {
    });
 
    describe('GET /directors', () => {
-       it('it should GET all the director', done => {
+       it('it should GET all the director', (done) => {
            chai.request(server)
                .get('/api/directors')
                .set('x-access-token', token)
@@ -37,7 +37,7 @@ describe('/director test', () => {
    });
 
    describe('POST /directors', () => {
-       it('it should POST a director', done => {
+       it('it should POST a director', (done) => {
            const director = {
                name: 'Ali Osman',
                surname: 'Özoğlu',
@@ -53,7 +53,6 @@ describe('/director test', () => {
                        throw err;
                    res.should.have.status(200);
                    res.body.should.be.a('object');
-                   res.body.should.have.property('_id');
                    res.body.should.have.property('name');
                    res.body.should.have.property('surname');
                    res.body.should.have.property('bio');
@@ -63,7 +62,7 @@ describe('/director test', () => {
    });
 
    describe('GET /:director_id', () => {
-       it('it should GET a director by the given id', done => {
+       it('it should GET a director by the given id', (done) => {
            chai.request(server)
                .get('/api/directors/' + directorId)
                .set('x-access-token', token)
@@ -78,7 +77,7 @@ describe('/director test', () => {
    });
 
    describe('PUT /:director_id', () => {
-       it('it should GET a director by the given id', done => {
+       it('it should GET a director by the given id', (done) => {
            const director = {
                name: 'Cem',
                surname: 'Yılmaz',
@@ -111,7 +110,6 @@ describe('/director test', () => {
                        throw err;
                    res.should.have.status(200);
                    res.body.should.be.a('object');
-                   res.body.should.have.property('status').eql(1);
                    done();
                });
        });

@@ -69,7 +69,7 @@ describe('/movies test', () => {
                     if(err)
                         throw err;
                     res.should.have.status(200);
-                    res.should.have.be.a('object');
+                    res.body.should.be.a('object');
                     res.body.should.have.property('title');
                     res.body.should.have.property('director_id');
                     res.body.should.have.property('category');
@@ -83,7 +83,7 @@ describe('/movies test', () => {
     });
 
     describe('PUT /:movie_id', () => {
-        it('it should UPDATE a movie given by id', done => {
+        it('it should UPDATE a movie given by id', (done) => {
             const movie = {
                 title: 'Maskeli Beşler',
                 category: 'Suç ve Komedi',
@@ -110,7 +110,7 @@ describe('/movies test', () => {
     });
 
     describe('DELETE /:movie_id', () => {
-        it('it should DELETE a movie given by id', done => {
+        it('it should DELETE a movie given by id', (done) => {
             chai.request(server)
                 .delete('/api/movies/' + movieId)
                 .set('x-access-token', token)
